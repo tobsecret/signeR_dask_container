@@ -15,4 +15,4 @@ export ANACONDA_HOME=/opt/conda
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This is going to be executed after the base container has been downloaded
 export PATH=/opt/conda/bin:$PATH
-conda install --yes bioconda::bioconductor-signer=1.8.0 conda-forge::dask=1.2.2 bioconda::tabix=0.2.6 bioconda::bioconductor-somaticsignatures=2.18.0 r::r-argparse=1.1.1
+conda install --yes bioconda::bioconductor-signer=1.8.0 conda-forge::dask=1.2.2 bioconda::tabix=0.2.6 bioconda::bioconductor-somaticsignatures=2.18.0 r::r-argparse=1.1.1 bioconda::samtools=1.9
