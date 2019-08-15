@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: broadinstitute/gatk3
+%labels
+AUTHOR tobi.schraink@gmail.com
+
