@@ -15,4 +15,4 @@ export ANACONDA_HOME=/opt/conda
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This is going to be executed after the base container has been downloaded
 export PATH=/opt/conda/bin:$PATH
-conda install --yes bioconda::gatk4=4.0.2 bioconda::samtools=1.9 bioconda::bwa=0.7.17 dask=2.2.0
+conda install --yes bioconda::gatk4=4.0.2 bioconda::samtools=1.9 bioconda::bcftools=1.9 bioconda::vcftools=0.1.16 bioconda::bwa=0.7.17 dask=2.2.0
