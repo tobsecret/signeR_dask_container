@@ -1,4 +1,4 @@
-# Mutational signatures
+# Genome Assembly
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/685)
 This container has the software needed for a genome assembly workflow that I am trying out.
 * [bwa](http://bio-bwa.sourceforge.net/bwa.shtml), Burrows-Wheeler Alignment Tool - used for aligning short reads to a fasta reference

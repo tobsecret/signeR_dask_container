@@ -1,0 +1,45 @@
+Bootstrap: docker
+From: biocontainers/biocontainers:latest
+%labels
+base.image="biocontainers:latest"
+version="1"
+software="RATT"
+software.version="https://gitlab.com/LPCDRP/RATT/commit/932224a5ab700a305ed42f6c8d2a98c6aad9ebb7"
+description="Rapid Annotation Transfer Tool"
+website="http://ratt.sourceforge.net/index.html"
+documentation="http://ratt.sourceforge.net/documentation.html"
+license="http://ratt.sourceforge.net/documentation.html"
+tags="General,Genomics,Annotation"
+MAINTAINER Le Viet Thanh <thanhlv@oucru.org>
+%post
+# Base Image
+
+# Metadata
+
+# Maintainer
+
+conda install mummer blast
+
+su -  root # USER root
+
+cd /opt && \
+git clone https://gitlab.com/LPCDRP/RATT.git ratt
+
+su -  biodocker # USER biodocker
+
+PATH=$PATH:/opt/ratt
+RATT_HOME=/opt/ratt
+
+
+cd /data/
+
+
+%environment
+export PATH=$PATH:/opt/ratt
+export RATT_HOME=/opt/ratt
+%runscript
+cd /data/
+exec /bin/bash bash "$@"
+%startscript
+cd /data/
+exec /bin/bash bash "$@"
