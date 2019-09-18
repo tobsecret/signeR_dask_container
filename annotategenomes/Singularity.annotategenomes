@@ -1,7 +1,19 @@
 Bootstrap: docker
-From: docker://silasysh/annogesic:latest
+From: continuumio/miniconda3:4.6.14
+
 %labels
 AUTHOR tobi.schraink@gmail.com
-%post
-pip install git+https://github.com/NBISweden/EMBLmyGFF3.git
 
+%environment
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# This sets global environment variables for anything run within the container
+export PATH="/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:"
+unset CONDA_DEFAULT_ENV
+export ANACONDA_HOME=/opt/conda
+
+%post
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# This is going to be executed after the base container has been downloaded
+export PATH=/opt/conda/bin:$PATH
+conda install --yes bioconda::samtools=1.9 bioconda::perl-text-nsp=1.31 bioconda::perl-svg=2.84 bioconda::perl-getopt-long=2.50 bioconda::blat=36
+perl -MCPAN -e 'install Statistics::Multtest'
