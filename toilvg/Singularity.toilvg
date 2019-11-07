@@ -1,0 +1,12 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%labels
+     ABOUTME Distributed and cloud computing framework for vg(tools for working with genome variation graphs)
+%post
+    apt-get -y update
+    apt-get -y upgrade
+    yes | apt install python-pip
+    pip install toil[aws,mesos]==3.20.0
+    pip install toil-vg
+    apt-get clean
