@@ -1,0 +1,56 @@
+
+Bootstrap: docker
+From: ubuntu:18.04
+
+%labels
+     ABOUTME tools for working with genome variation graphs
+
+%environment
+    export LC_ALL=C
+    export PATH=$MY_PATH:.:/host/bin:/opt/vg/bin:/opt/hdf5-1.10.1/hdf5/bin:/opt/hal2vg:$PATH
+    export LD_LIBRARY_PATH=$MY_LD_LIBRARY_PATH:.:/host/lib:$LD_LIBRARY_PATH
+
+%runscript
+    exec /bin/bash "$@"	
+
+%post
+    apt-get -y update
+    apt-get -y upgrade
+
+    # to change time zone to EST
+    export TZ="America/New_York"
+    apt-get install tzdata
+    rm -rf /etc/localtime
+    cp -rp /usr/share/zoneinfo/EST /etc/localtime
+
+    apt-get install -y automake bc bison cmake curl flex gawk gtk-doc-tools jq \
+    	    	       libbz2-dev libcairo2-dev libffi-dev libgoogle-perftools-dev \
+		       libjansson-dev liblz4-dev liblzma-dev libncurses5-dev libncurses-dev \
+		       libpixman-1-dev libprotoc-dev librdf-dev libtool lzma-dev \
+		       pkg-config protobuf-compiler raptor2-utils rasqal-utils redland-utils \
+		       rs samtools unzip wget git
+
+    cd /opt && \
+    rm -rf vg && \
+    git clone --recursive https://github.com/vgteam/vg.git && \
+    cd vg && . ./source_me.sh && make -j60
+
+    cd /opt && wget http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.1/src/hdf5-1.10.1.tar.gz && \
+    tar -vxzf hdf5-1.10.1.tar.gz && \
+    cd hdf5-1.10.1 && \
+    ./configure --enable-cxx && \
+    make -j60 && make install && \
+    rm -rf /opt/hdf5-1.10.1.tar.gz
+
+    export PATH=.:/opt/hdf5-1.10.1/hdf5/bin:$PATH
+
+    cd /opt && rm -rf hal2vg && \
+    git clone https://github.com/glennhickey/hal2vg.git --recursive && \
+    cd hal2vg && \
+    sed -i.bak -e 's#LIBPROTOBUF=$(VGLIBDIR)/libprotobuf.a#LIBPROTOBUF=/usr/lib/x86_64-linux-gnu/libprotobuf.a#' include.mk && \
+    make 
+
+    apt-get clean
+
+
+
